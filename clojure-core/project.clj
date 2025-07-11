@@ -8,4 +8,5 @@
   :source-paths ["src/clojure_core"]
   :main clojure-core.core
   :aot [clojure-core.core]
-  :test-paths ["test/clojure_core"])
+  :test-paths ["test/clojure_core"]
+  :uberjar-name "clojure-core-0.1.0-ALPHA-standalone.jar")
