@@ -12,7 +12,7 @@ public class AppWindow extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        String startPage = Objects.requireNonNull(getClass().getResource("html/start.html")).toExternalForm();
+        String startPage = Objects.requireNonNull(getClass().getResource("/html/start.html")).toExternalForm();
         BorderPane root = new BorderPane();
         WebView webView = new WebView();
 
