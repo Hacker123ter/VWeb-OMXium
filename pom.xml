@@ -6,7 +6,7 @@
 
     <groupId>org.OMX.VWeb-OMXium</groupId>
     <artifactId>VWeb-OMXium</artifactId>
-    <version>0.0.0-Alpha</version>
+    <version>0.0.1-Alpha</version>
     <packaging>pom</packaging>
     <modules>
         <module>core-java</module>
@@ -17,5 +17,19 @@
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>central</id>
+            <name>Maven Central Repository</name>
+            <url>https://repo1.maven.org/maven2/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
 </project>
