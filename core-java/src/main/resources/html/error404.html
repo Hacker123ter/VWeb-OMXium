@@ -3,21 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <title>404 — Страница не найдена</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: sans-serif; text-align: center; padding: 50px; }
-        h1 { font-size: 48px; color: #c00; }
-        p  { font-size: 18px; }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: linear-gradient(135deg, #1e1e2f, #111118);
+            color: #f5f5f5;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 120px;
+            color: #ff0055;
+            text-shadow: 0 0 15px #ff0055, 0 0 30px #ff0055, 0 0 60px #ff3377;
+            animation: pulse 2s infinite;
+        }
+
+        p {
+            font-size: 24px;
             margin-top: 20px;
+            color: #ccc;
+        }
+
+        button {
+            margin-top: 40px;
+            padding: 14px 28px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #ff0055, #ff3366);
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 0 10px #ff0055;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px #ff3366, 0 0 40px #ff3366;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                text-shadow: 0 0 10px #ff0055, 0 0 20px #ff0055;
+            }
+            50% {
+                text-shadow: 0 0 20px #ff3366, 0 0 40px #ff3366;
+            }
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 72px;
+            }
+
+            p {
+                font-size: 18px;
+            }
+
+            button {
+                font-size: 16px;
+                padding: 12px 24px;
+            }
         }
     </style>
 </head>
 <body>
 <h1>404</h1>
 <p>Упс! Страница не найдена.</p>
-<button onclick="history.back();">Назад</button>
+<button onclick="history.back();">⟵ Назад</button>
 </body>
 </html>
