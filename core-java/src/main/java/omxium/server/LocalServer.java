@@ -26,7 +26,12 @@ public class LocalServer extends NanoHTTPD {
 
         InputStream in = getClass().getResourceAsStream(RESOURCE_ROOT + uri);
         if (in == null) {
-            return newFixedLengthResponse(Response.Status.NOT_FOUND, MIME_PLAINTEXT, "404 Not Found");
+            InputStream errorPage = getClass().getResourceAsStream(RESOURCE_ROOT + "/error404.html");
+            if (errorPage != null) {
+                return newChunkedResponse(Response.Status.NOT_FOUND, "text/html; charset=UTF-8", errorPage);
+            } else {
+                return newFixedLengthResponse(Response.Status.NOT_FOUND, MIME_PLAINTEXT, "404 Not Found");
+            }
         }
         String mime = guessMimeType(uri);
         return newChunkedResponse(Response.Status.OK, mime, in);
