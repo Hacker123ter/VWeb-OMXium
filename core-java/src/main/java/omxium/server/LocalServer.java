@@ -69,6 +69,10 @@ public class LocalServer extends NanoHTTPD {
         if (uri.endsWith(".js"))   return "application/javascript";
         if (uri.endsWith(".png"))  return "image/png";
         if (uri.endsWith(".jpg")||uri.endsWith(".jpeg")) return "image/jpeg";
+        if (uri.endsWith(".woff"))  return "font/woff";
+        if (uri.endsWith(".woff2")) return "font/woff2";
+        if (uri.endsWith(".ttf"))   return "font/ttf";
+        if (uri.endsWith(".otf"))   return "font/otf";
         return "application/octet-stream";
     }
 }
