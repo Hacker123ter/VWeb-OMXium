@@ -1,35 +1,54 @@
 package omxium.ui;
 
+import omxium.server.LocalServer;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
-import java.util.Objects;
-
 public class AppWindow extends Application {
 
-    @Override
-    public void start(Stage primaryStage) {
-        String startPage = Objects.requireNonNull(getClass().getResource("/html/start.html")).toExternalForm();
-        BorderPane root = new BorderPane();
-        WebView webView = new WebView();
+    private LocalServer server;
 
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        server = new LocalServer(1739);
+
+        WebView webView = new WebView();
+        webView.setContextMenuEnabled(false);
         new UrlBlocker(webView.getEngine());
 
-        webView.setContextMenuEnabled(false);
-        webView.getEngine().load(startPage);
+        webView.getEngine().locationProperty().addListener((obs, o, n) -> {
+            if (n != null && n.startsWith("gmp://")) {
+                String tail = n.substring("gmp://".length());
+                Platform.runLater(() -> webView.getEngine().load("http://" + tail));
+            }
+        });
 
-        root.setCenter(webView);
+        webView.getEngine().load("gmp://localhost:1739/start.html");
 
-        Scene scene = new Scene(root);
-
+        BorderPane root = new BorderPane(webView);
+        primaryStage.setScene(new Scene(root));
         primaryStage.setTitle("VWeb Omxium");
-        primaryStage.setScene(scene);
-
         primaryStage.setMaximized(true);
 
+        primaryStage.setOnCloseRequest(evt -> {
+            if (server != null) {
+                server.stop();
+            }
+            Platform.exit();
+        });
+
         primaryStage.show();
+    }
+
+    @Override
+    public void stop() throws Exception {
+        super.stop();
+        if (server != null) {
+            server.stop();
+        }
     }
 }

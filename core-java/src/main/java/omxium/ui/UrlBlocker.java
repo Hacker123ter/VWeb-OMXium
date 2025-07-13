@@ -5,6 +5,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebHistory;
 
+import java.net.URI;
+
 public class UrlBlocker {
 
     private final WebEngine engine;
@@ -42,6 +44,19 @@ public class UrlBlocker {
     }
 
     private boolean isBlocked(String url) {
-        return url.startsWith("http://") || url.startsWith("https://");
+        try {
+            URI uri = new URI(url);
+            String scheme = uri.getScheme();
+            String host   = uri.getHost();
+            if (("http".equalsIgnoreCase(scheme) || "https".equalsIgnoreCase(scheme))
+                    && host != null
+                    && !host.equals("localhost")
+                    && !host.equals("127.0.0.1")
+            ) {
+                return true;
+            }
+        } catch (Exception e) {
+        }
+        return false;
     }
 }
