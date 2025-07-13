@@ -1,5 +1,6 @@
 package omxium.ui;
 
+import javafx.scene.image.Image;
 import omxium.server.LocalServer;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -7,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+
+import java.util.Objects;
 
 public class AppWindow extends Application {
 
@@ -32,6 +35,9 @@ public class AppWindow extends Application {
         BorderPane root = new BorderPane(webView);
         primaryStage.setScene(new Scene(root));
         primaryStage.setTitle("VWeb Omxium");
+
+        primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/icon.png"))));
+
         primaryStage.setMaximized(true);
 
         primaryStage.setOnCloseRequest(evt -> {
