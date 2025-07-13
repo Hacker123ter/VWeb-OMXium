@@ -16,7 +16,7 @@ public class AppWindow extends Application {
         BorderPane root = new BorderPane();
         WebView webView = new WebView();
 
-        new UrlBlocker(webView.getEngine(), startPage);
+        new UrlBlocker(webView.getEngine());
 
         webView.setContextMenuEnabled(false);
         webView.getEngine().load(startPage);

@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.OMX.VWeb-OMXium</groupId>
         <artifactId>VWeb-OMXium</artifactId>
-        <version>0.0.1-Alpha</version>
+        <version>0.0.2-Alpha</version>
     </parent>
 
     <artifactId>core-java</artifactId>
@@ -40,6 +40,11 @@
             <artifactId>javafx-web</artifactId>
             <version>21</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.nanohttpd</groupId>
+            <artifactId>nanohttpd</artifactId>
+            <version>2.3.1</version>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
 </project>

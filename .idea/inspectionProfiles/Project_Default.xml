@@ -37,15 +37,21 @@
       <option name="ignoredModules">
         <list>
           <option value="core-java" />
+          <option value="core-java" />
+          <option value="core-java" />
         </list>
       </option>
       <option name="ignoredPackages">
         <list>
           <option value="org.clojure:clojure:1.11.1" />
+          <option value="org.nanohttpd:nanohttpd:2.3.1" />
+          <option value="org.openjfx:javafx-graphics:21" />
         </list>
       </option>
       <option name="ignoredReasons">
         <list>
+          <option value="Not exploitable" />
+          <option value="Not exploitable" />
           <option value="Not exploitable" />
         </list>
       </option>
