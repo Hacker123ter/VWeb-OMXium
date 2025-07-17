@@ -8,8 +8,8 @@ rpc.on('ready', () => {
     console.log('Discord RPC ready');
 
     rpc.setActivity({
-        details: 'VWeb OMXium',
-        state: 'v.0.0.4-Alpha',
+        details: 'Browser VWeb 0.0.4-Alpha',
+        state: 'Alpha Testing',
         startTimestamp: Math.floor(Date.now() / 1000),
         largeImageKey: 'vweb',
         largeImageText: 'VWeb OMXium (GMP Protocol)',
