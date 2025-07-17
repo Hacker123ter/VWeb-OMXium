@@ -32,6 +32,7 @@ public class AppWindow extends Application {
             }
         });
 
+        webView.getEngine().setUserAgent("OmxiumWebView/1.0");
         webView.getEngine().load("gmp://localhost:1739/start.html");
 
         ContextMenuHandler contextHandler = new ContextMenuHandler(webView);

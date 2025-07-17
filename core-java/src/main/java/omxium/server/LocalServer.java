@@ -17,6 +17,15 @@ public class LocalServer extends NanoHTTPD {
 
     @Override
     public Response serve(IHTTPSession session) {
+        String ua = session.getHeaders().get("user-agent");
+        if (ua == null || !ua.contains("OmxiumWebView/1.0")) {
+            return newFixedLengthResponse(
+                    Response.Status.FORBIDDEN,
+                    MIME_PLAINTEXT,
+                    "403 Forbidden"
+            );
+        }
+
         String uri = session.getUri();
         if (uri.equals("/")) uri = "/start.html";
 
