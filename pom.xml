@@ -6,7 +6,7 @@
 
     <groupId>org.OMX.VWeb-OMXium</groupId>
     <artifactId>VWeb-OMXium</artifactId>
-    <version>0.0.4-SNAPSHOT</version>
+    <version>0.0.4-ALPHA</version>
     <packaging>pom</packaging>
     <modules>
         <module>core-java</module>

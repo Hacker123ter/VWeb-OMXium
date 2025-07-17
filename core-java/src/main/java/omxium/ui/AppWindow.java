@@ -1,6 +1,7 @@
 package omxium.ui;
 
 import javafx.scene.image.Image;
+import omxium.rpc.DiscordRPCModule;
 import omxium.server.LocalServer;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -18,6 +19,7 @@ public class AppWindow extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         server = new LocalServer(1739);
+        DiscordRPCModule.start();
 
         WebView webView = new WebView();
         webView.setContextMenuEnabled(false);
@@ -52,6 +54,7 @@ public class AppWindow extends Application {
 
     @Override
     public void stop() throws Exception {
+        DiscordRPCModule.stop();
         super.stop();
         if (server != null) {
             server.stop();

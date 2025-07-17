@@ -1,0 +1,17 @@
+{
+  "name": "core-java",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Hacker123ter/VWeb-OMXium.git"
+  },
+  "private": true,
+  "dependencies": {
+    "discord-rpc": "^4.0.1"
+  }
+}
