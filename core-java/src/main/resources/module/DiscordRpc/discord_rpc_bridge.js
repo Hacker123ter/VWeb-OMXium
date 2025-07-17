@@ -8,15 +8,11 @@ rpc.on('ready', () => {
     console.log('Discord RPC ready');
 
     rpc.setActivity({
-        details: 'Статичная надпись',
-        state: 'Еще одна строка',
+        details: 'VWeb OMXium',
+        state: 'v.0.0.4-Alpha',
         startTimestamp: Math.floor(Date.now() / 1000),
-        buttons: [
-            { label: 'Кнопка 1', url: 'https://example.com' },
-            { label: 'Кнопка 2', url: 'https://example.org' }
-        ],
         largeImageKey: 'vweb',
-        largeImageText: 'Большое изображение',
+        largeImageText: 'VWeb OMXium (GMP Protocol)',
         instance: false,
     });
 });
