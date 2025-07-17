@@ -1,11 +1,13 @@
 package omxium.rpc;
 
+import java.awt.*;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.*;
 import java.util.Comparator;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 public class DiscordRPCModule {
 
@@ -13,6 +15,11 @@ public class DiscordRPCModule {
     private static Path tempDir;
 
     public static void start() {
+        if (!isNodeInstalled()) {
+            promptInstallNode();
+            return;
+        }
+
         if (nodeProcess != null && nodeProcess.isAlive()) return;
 
         try {
@@ -53,6 +60,36 @@ public class DiscordRPCModule {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+
+    private static boolean isNodeInstalled() {
+        try {
+            Process p = new ProcessBuilder("node", "--version")
+                    .redirectErrorStream(true)
+                    .start();
+            if (!p.waitFor(3, TimeUnit.SECONDS)) {
+                p.destroy();
+                return false;
+            }
+            return p.exitValue() == 0;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private static void promptInstallNode() {
+        String url = "https://nodejs.org/en/download/";
+        System.err.println("Node.js не найден. Пожалуйста, установите его: " + url);
+        try {
+            if (Desktop.isDesktopSupported()) {
+                Desktop.getDesktop().browse(new URI(url));
+            } else {
+                Runtime.getRuntime().exec(new String[] { "xdg-open", url });
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
