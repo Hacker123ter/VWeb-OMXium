@@ -34,6 +34,8 @@ public class AppWindow extends Application {
 
         webView.getEngine().load("gmp://localhost:1739/start.html");
 
+        ContextMenuHandler contextHandler = new ContextMenuHandler(webView);
+
         BorderPane root = new BorderPane(webView);
         primaryStage.setScene(new Scene(root));
         primaryStage.setTitle("VWeb Omxium");
