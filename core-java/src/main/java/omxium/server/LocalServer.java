@@ -6,6 +6,8 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import omxium.ui.AppWindow;
+
 
 public class LocalServer extends NanoHTTPD {
     private static final String RESOURCE_ROOT = "/html";
@@ -19,11 +21,12 @@ public class LocalServer extends NanoHTTPD {
     public Response serve(IHTTPSession session) {
         String ua = session.getHeaders().get("user-agent");
         if (ua == null || !ua.contains("OmxiumWebView/1.0")) {
-            return newFixedLengthResponse(
-                    Response.Status.FORBIDDEN,
-                    MIME_PLAINTEXT,
-                    "403 Forbidden"
-            );
+            return newFixedLengthResponse(Response.Status.NOT_FOUND, MIME_PLAINTEXT, "404 Not Found");
+        }
+
+        String token = session.getHeaders().get("x-omxium-token");
+        if (!AppWindow.AUTH_TOKEN.equals(token)) {
+            return newFixedLengthResponse(Response.Status.NOT_FOUND, MIME_PLAINTEXT, "404 Not Found");
         }
 
         String uri = session.getUri();

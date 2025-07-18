@@ -1,5 +1,6 @@
 package omxium.ui;
 
+import javafx.concurrent.Worker;
 import javafx.scene.image.Image;
 import omxium.rpc.DiscordRPCModule;
 import omxium.server.LocalServer;
@@ -9,15 +10,21 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import org.apache.commons.codec.digest.HmacUtils;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class AppWindow extends Application {
 
     private LocalServer server;
+    private static final String SECRET_KEY = UUID.randomUUID().toString();
+    public static volatile String AUTH_TOKEN;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        regenerateToken();
+
         server = new LocalServer(1739);
         DiscordRPCModule.start();
 
@@ -33,6 +40,28 @@ public class AppWindow extends Application {
         });
 
         webView.getEngine().setUserAgent("OmxiumWebView/1.0");
+        webView.getEngine().getLoadWorker().stateProperty().addListener((obs, o, state) -> {
+            if (state == Worker.State.SUCCEEDED) {
+                String script = """
+                    window.__omxiumToken = '%s';
+                    (function(){
+                        const origFetch = window.fetch;
+                        window.fetch = function(resource, init = {}) {
+                            init.headers = Object.assign({}, init.headers || {}, {
+                                'X-Omxium-Token': window.__omxiumToken
+                            });
+                            return origFetch(resource, init);
+                        };
+                        const origOpen = XMLHttpRequest.prototype.open;
+                        XMLHttpRequest.prototype.open = function(method, url) {
+                            this.setRequestHeader('X-Omxium-Token', window.__omxiumToken);
+                            origOpen.apply(this, arguments);
+                        };
+                    })();
+                """.formatted(AUTH_TOKEN);
+                webView.getEngine().executeScript(script);
+            }
+        });
         webView.getEngine().load("gmp://localhost:1739/start.html");
 
         ContextMenuHandler contextHandler = new ContextMenuHandler(webView);
@@ -53,6 +82,22 @@ public class AppWindow extends Application {
         });
 
         primaryStage.show();
+
+        new Thread(() -> {
+            while (true) {
+                try { Thread.sleep(5 * 60 * 1000); } catch (InterruptedException ignored) {}
+                regenerateToken();
+                Platform.runLater(() -> {
+                    String js = "window.__omxiumToken = '" + AUTH_TOKEN + "';";
+                    webView.getEngine().executeScript(js);
+                });
+            }
+        }).start();
+
+        primaryStage.setOnCloseRequest(evt -> {
+            if (server != null) server.stop();
+            Platform.exit();
+        });
     }
 
     @Override
@@ -62,5 +107,10 @@ public class AppWindow extends Application {
         if (server != null) {
             server.stop();
         }
+    }
+
+    private static void regenerateToken() {
+        String raw = UUID.randomUUID().toString();
+        AUTH_TOKEN = HmacUtils.hmacSha256Hex(SECRET_KEY, raw);
     }
 }

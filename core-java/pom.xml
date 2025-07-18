@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.OMX.VWeb-OMXium</groupId>
         <artifactId>VWeb-OMXium</artifactId>
-        <version>0.0.5-SNAPSHOT</version>
+        <version>0.0.5-Alpha</version>
     </parent>
 
     <artifactId>core-java</artifactId>
@@ -44,6 +44,11 @@
             <groupId>org.nanohttpd</groupId>
             <artifactId>nanohttpd</artifactId>
             <version>2.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.18.0</version>
         </dependency>
     </dependencies>
 </project>
