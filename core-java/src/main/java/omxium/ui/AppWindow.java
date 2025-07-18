@@ -20,6 +20,7 @@ public class AppWindow extends Application {
     private LocalServer server;
     private static final String SECRET_KEY = UUID.randomUUID().toString();
     public static volatile String AUTH_TOKEN;
+    private Thread tokenRefreshThread;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -62,7 +63,10 @@ public class AppWindow extends Application {
                 webView.getEngine().executeScript(script);
             }
         });
-        webView.getEngine().load("gmp://localhost:1739/start.html");
+
+        webView.getEngine().load(
+                String.format("gmp://localhost:1739/start.html?token=%s", AUTH_TOKEN)
+        );
 
         ContextMenuHandler contextHandler = new ContextMenuHandler(webView);
 
@@ -78,26 +82,31 @@ public class AppWindow extends Application {
             if (server != null) {
                 server.stop();
             }
+            if (tokenRefreshThread != null) {
+                tokenRefreshThread.interrupt();
+            }
             Platform.exit();
         });
 
         primaryStage.show();
 
-        new Thread(() -> {
-            while (true) {
-                try { Thread.sleep(5 * 60 * 1000); } catch (InterruptedException ignored) {}
+        tokenRefreshThread = new Thread(() -> {
+            while (!Thread.currentThread().isInterrupted()) {
+                try {
+                    Thread.sleep(5 * 60 * 1000);
+                } catch (InterruptedException e) {
+                    break;
+                }
                 regenerateToken();
                 Platform.runLater(() -> {
                     String js = "window.__omxiumToken = '" + AUTH_TOKEN + "';";
                     webView.getEngine().executeScript(js);
                 });
             }
-        }).start();
-
-        primaryStage.setOnCloseRequest(evt -> {
-            if (server != null) server.stop();
-            Platform.exit();
         });
+        tokenRefreshThread.setDaemon(true);
+        tokenRefreshThread.start();
+
     }
 
     @Override
@@ -106,6 +115,9 @@ public class AppWindow extends Application {
         super.stop();
         if (server != null) {
             server.stop();
+        }
+        if (tokenRefreshThread != null) {
+            tokenRefreshThread.interrupt();
         }
     }
 

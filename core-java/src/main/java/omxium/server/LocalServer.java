@@ -6,7 +6,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import omxium.ui.AppWindow;
+import static omxium.ui.AppWindow.AUTH_TOKEN;
 
 
 public class LocalServer extends NanoHTTPD {
@@ -25,7 +25,8 @@ public class LocalServer extends NanoHTTPD {
         }
 
         String token = session.getHeaders().get("x-omxium-token");
-        if (!AppWindow.AUTH_TOKEN.equals(token)) {
+        String paramToken = session.getParms().get("token");
+        if (!AUTH_TOKEN.equals(token) && !AUTH_TOKEN.equals(paramToken)) {
             return newFixedLengthResponse(Response.Status.NOT_FOUND, MIME_PLAINTEXT, "404 Not Found");
         }
 
