@@ -123,6 +123,6 @@ public class AppWindow extends Application {
 
     private static void regenerateToken() {
         String raw = UUID.randomUUID().toString();
-        AUTH_TOKEN = HmacUtils.hmacSha256Hex(SECRET_KEY, raw);
+        AUTH_TOKEN = new HmacUtils("HmacSHA256", SECRET_KEY).hmacHex(raw);
     }
 }
