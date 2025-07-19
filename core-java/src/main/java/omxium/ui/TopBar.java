@@ -14,14 +14,10 @@ public class TopBar extends HBox {
     public TopBar() {
         setPrefHeight(32);
         setStyle(
-                "-fx-background-color: white;"
-                        + "-fx-border-color: #e0e0e0;"
-                        + "-fx-border-width: 1 0 0 0;"
+                "-fx-background-color: white;" +
+                        "-fx-border-color: #e0e0e0;" +
+                        "-fx-border-width: 1 0 0 0;"
         );
-
-        VBox timerBox = new VBox();
-        timerBox.setAlignment(Pos.CENTER_RIGHT);
-        timerBox.setPadding(new Insets(2, 10, 2, 10));
 
         Label titleLabel = new Label("Time activity");
         titleLabel.setStyle("-fx-font-size: 10px; -fx-text-fill: gray;");
@@ -29,7 +25,9 @@ public class TopBar extends HBox {
         timerLabel = new Label("0:00");
         timerLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: gray;");
 
-        timerBox.getChildren().addAll(titleLabel, timerLabel);
+        VBox timerBox = new VBox(titleLabel, timerLabel);
+        timerBox.setAlignment(Pos.CENTER);
+        timerBox.setPadding(new Insets(2, 10, 2, 10));
 
         setAlignment(Pos.CENTER_RIGHT);
         getChildren().add(timerBox);

@@ -47,8 +47,6 @@ public class AppWindow extends Application {
 
         new ContextMenuHandler(webView);
 
-        TopBar topBar = new TopBar();
-
         VBox root = new VBox(topBar, webView);
         root.setSpacing(0);
         root.setFillWidth(true);
