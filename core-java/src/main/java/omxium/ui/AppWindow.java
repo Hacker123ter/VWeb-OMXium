@@ -8,7 +8,6 @@ import omxium.server.LocalServer;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
@@ -39,7 +38,7 @@ public class AppWindow extends Application {
 
         webView.getEngine().load("gmp://localhost:1739/start.html");
 
-        ContextMenuHandler contextHandler = new ContextMenuHandler(webView);
+        new ContextMenuHandler(webView);
 
         TopBar topBar = new TopBar();
 
