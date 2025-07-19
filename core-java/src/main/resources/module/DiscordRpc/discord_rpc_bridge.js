@@ -11,8 +11,10 @@ rpc.on('ready', () => {
         details: 'Browser VWeb 0.0.6-SNAPSHOT',
         state: 'Alpha Testing',
         startTimestamp: Math.floor(Date.now() / 1000),
-        largeImageKey: 'vweb',
-        largeImageText: 'VWeb OMXium (GMP Protocol)',
+        largeImageKey: 'gmp',
+        largeImageText: 'GMP Protocol',
+        smallImageKey: 'vweb',
+        smallImageText: 'VWeb OMXium',
         instance: false,
     });
 });
