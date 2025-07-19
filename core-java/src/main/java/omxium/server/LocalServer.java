@@ -16,11 +16,15 @@ public class LocalServer extends NanoHTTPD {
 
     @Override
     public Response serve(IHTTPSession session) {
+        String ip = session.getRemoteIpAddress();
+        if (!ip.equals("127.0.0.1") && !ip.equals("::1")) {
+            return newFixedLengthResponse(Response.Status.FORBIDDEN, MIME_PLAINTEXT, "403 Forbidden - Access Denied");
+        }
+
         String ua = session.getHeaders().get("user-agent");
         if (ua == null || !ua.contains("OmxiumWebView/1.0")) {
             return newFixedLengthResponse(Response.Status.NOT_FOUND, MIME_PLAINTEXT, "404 Not Found");
         }
-
 
         String uri = session.getUri();
         if (uri.equals("/")) uri = "/start.html";
