@@ -1,4 +1,4 @@
-package omxium.ui;
+package omxium.runtime;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;

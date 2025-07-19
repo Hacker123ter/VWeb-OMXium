@@ -1,7 +1,9 @@
 package omxium.ui;
 
 import javafx.scene.image.Image;
+import javafx.scene.layout.VBox;
 import omxium.rpc.DiscordRPCModule;
+import omxium.runtime.UrlBlocker;
 import omxium.server.LocalServer;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -39,7 +41,9 @@ public class AppWindow extends Application {
 
         ContextMenuHandler contextHandler = new ContextMenuHandler(webView);
 
-        BorderPane root = new BorderPane(webView);
+        TopBar topBar = new TopBar();
+        VBox root = new VBox(topBar, webView);
+
         primaryStage.setScene(new Scene(root));
         primaryStage.setTitle("VWeb Omxium");
 
