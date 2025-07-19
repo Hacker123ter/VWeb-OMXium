@@ -1,7 +1,10 @@
 package omxium.ui;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import omxium.rpc.DiscordRPCModule;
 import omxium.runtime.UrlBlocker;
 import omxium.server.LocalServer;
@@ -16,9 +19,13 @@ import java.util.Objects;
 public class AppWindow extends Application {
 
     private LocalServer server;
+    private TopBar topBar;
+
+    private int secondsElapsed = 0;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        topBar = new TopBar();
 
         server = new LocalServer(1739);
         DiscordRPCModule.start();
@@ -66,6 +73,17 @@ public class AppWindow extends Application {
 
         primaryStage.show();
 
+        startTimerActivity();
+
+    }
+
+    private void startTimerActivity() {
+        Timeline timer = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+            secondsElapsed++;
+            topBar.updateTimerActivity(secondsElapsed);
+        }));
+        timer.setCycleCount(Timeline.INDEFINITE);
+        timer.play();
     }
 
     @Override
