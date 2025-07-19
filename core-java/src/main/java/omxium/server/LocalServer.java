@@ -5,11 +5,6 @@ import fi.iki.elonen.NanoHTTPD;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
-import java.util.Map;
-
-import static omxium.ui.AppWindow.AUTH_TOKEN;
-
 
 public class LocalServer extends NanoHTTPD {
     private static final String RESOURCE_ROOT = "/html";
@@ -26,13 +21,6 @@ public class LocalServer extends NanoHTTPD {
             return newFixedLengthResponse(Response.Status.NOT_FOUND, MIME_PLAINTEXT, "404 Not Found");
         }
 
-        String token = session.getHeaders().get("x-omxium-token");
-        Map<String, List<String>> params = session.getParameters();
-        List<String> tokens = params.get("token");
-        String paramToken = (tokens != null && !tokens.isEmpty()) ? tokens.get(0) : null;
-        if (!AUTH_TOKEN.equals(token) && !AUTH_TOKEN.equals(paramToken)) {
-            return newFixedLengthResponse(Response.Status.NOT_FOUND, MIME_PLAINTEXT, "404 Not Found");
-        }
 
         String uri = session.getUri();
         if (uri.equals("/")) uri = "/start.html";
