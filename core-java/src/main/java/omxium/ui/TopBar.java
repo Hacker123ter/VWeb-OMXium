@@ -7,6 +7,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.util.Locale;
+
 public class TopBar extends HBox {
 
     private final Label timerLabel;
@@ -19,7 +21,10 @@ public class TopBar extends HBox {
                         "-fx-border-width: 1 0 0 0;"
         );
 
-        Label titleLabel = new Label("Time activity");
+        boolean isRussian = Locale.getDefault().getLanguage().equals(new Locale("ru").getLanguage());
+
+        String titleText = isRussian ? "Время активности" : "Time Activity";
+        Label titleLabel = new Label(titleText);
         titleLabel.setStyle("-fx-font-size: 10px; -fx-text-fill: gray;");
 
         timerLabel = new Label("0:00");

@@ -8,7 +8,7 @@ rpc.on('ready', () => {
     console.log('Discord RPC ready');
 
     rpc.setActivity({
-        details: 'Browser VWeb 0.0.4-Alpha',
+        details: 'Browser VWeb 0.0.6-SNAPSHOT',
         state: 'Alpha Testing',
         startTimestamp: Math.floor(Date.now() / 1000),
         largeImageKey: 'vweb',
