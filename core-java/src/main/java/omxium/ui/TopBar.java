@@ -6,6 +6,10 @@ public class TopBar extends HBox {
 
     public TopBar() {
         setPrefHeight(32);
-        setStyle("-fx-background-color: white; -fx-border-color: #e0e0e0; -fx-border-width: 0 0 1 0;");
+        setStyle(
+                "-fx-background-color: white;"
+                        + "-fx-border-color: #e0e0e0;"
+                        + "-fx-border-width: 1 0 0 0;"
+        );
     }
 }

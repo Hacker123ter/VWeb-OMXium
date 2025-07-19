@@ -42,7 +42,14 @@ public class AppWindow extends Application {
         ContextMenuHandler contextHandler = new ContextMenuHandler(webView);
 
         TopBar topBar = new TopBar();
+
         VBox root = new VBox(topBar, webView);
+        root.setSpacing(0);
+        root.setFillWidth(true);
+        VBox.setVgrow(webView, javafx.scene.layout.Priority.ALWAYS);
+
+        root.setStyle("-fx-background-color: white;");
+        webView.setStyle("-fx-background-color: white;");
 
         primaryStage.setScene(new Scene(root));
         primaryStage.setTitle("VWeb Omxium");
