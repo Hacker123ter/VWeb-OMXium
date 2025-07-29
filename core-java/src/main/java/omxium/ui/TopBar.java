@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import omxium.i18n.I18n;
 
 import java.util.Locale;
 
@@ -21,9 +22,7 @@ public class TopBar extends HBox {
                         "-fx-border-width: 1 0 0 0;"
         );
 
-        boolean isRussian = Locale.getDefault().getLanguage().equals(new Locale("ru").getLanguage());
-
-        String titleText = isRussian ? "Время активности" : "Time Activity";
+        String titleText = I18n.t("topbar.title");
         Label titleLabel = new Label(titleText);
         titleLabel.setStyle("-fx-font-size: 10px; -fx-text-fill: gray;");
 
